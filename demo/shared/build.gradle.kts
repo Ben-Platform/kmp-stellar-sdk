@@ -40,42 +40,6 @@ kotlin {
         }
     }
 
-    jvm("desktop") {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        }
-    }
-
-    js(IR) {
-        browser()
-        binaries.executable()
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "shared"
-            isStatic = true
-            // Export stellar-sdk for iOS
-            export(project(":stellar-sdk"))
-        }
-    }
-
-    listOf(
-        macosX64(),
-        macosArm64()
-    ).forEach { macosTarget ->
-        macosTarget.binaries.framework {
-            baseName = "shared"
-            isStatic = true
-            // Export stellar-sdk for macOS
-            export(project(":stellar-sdk"))
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             kotlin.srcDir(layout.buildDirectory.dir("generated/src/commonMain/kotlin"))
@@ -141,62 +105,6 @@ kotlin {
                 // Android-specific Compose integration
                 implementation("androidx.activity:activity-compose:1.8.2")
                 implementation("androidx.appcompat:appcompat:1.6.1")
-            }
-        }
-
-        // ============================================================
-        // Desktop Platform (JVM)
-        // ============================================================
-        val desktopMain by getting {
-            dependencies {
-                // Desktop-specific Compose support
-                implementation(compose.desktop.common)
-            }
-        }
-
-        // ============================================================
-        // iOS Platform
-        // ============================================================
-        val iosMain by creating {
-            dependsOn(commonMain)
-            // No additional dependencies needed - stellar-sdk provides everything
-        }
-
-        val iosX64Main by getting {
-            dependsOn(iosMain)
-        }
-
-        val iosArm64Main by getting {
-            dependsOn(iosMain)
-        }
-
-        val iosSimulatorArm64Main by getting {
-            dependsOn(iosMain)
-        }
-
-        // ============================================================
-        // macOS Platform
-        // ============================================================
-        val macosMain by creating {
-            dependsOn(commonMain)
-            // No additional dependencies needed - stellar-sdk provides everything
-        }
-
-        val macosX64Main by getting {
-            dependsOn(macosMain)
-        }
-
-        val macosArm64Main by getting {
-            dependsOn(macosMain)
-        }
-
-        // ============================================================
-        // JavaScript Platform (Browser)
-        // ============================================================
-        val jsMain by getting {
-            dependencies {
-                // HTML-based Compose for web
-                implementation(compose.html.core)
             }
         }
     }

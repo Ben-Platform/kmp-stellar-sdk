@@ -13,36 +13,6 @@ kotlin {
         }
     }
 
-    // No desktop/JVM target - passkeys are not supported on Desktop JVM
-
-    js(IR) {
-        browser()
-        binaries.executable()
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "shared"
-            isStatic = true
-            export(project(":stellar-sdk"))
-        }
-    }
-
-    listOf(
-        macosX64(),
-        macosArm64()
-    ).forEach { macosTarget ->
-        macosTarget.binaries.framework {
-            baseName = "shared"
-            isStatic = true
-            export(project(":stellar-sdk"))
-        }
-    }
-
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -114,62 +84,6 @@ kotlin {
                 // Required by ReownConnector which implements WalletConnector for Android.
                 implementation("com.reown:android-core:1.6.17")
                 implementation("com.reown:sign:1.6.17")
-            }
-        }
-
-        // ============================================================
-        // iOS Platform
-        // ============================================================
-        val iosMain by creating {
-            dependsOn(commonMain)
-            dependencies {
-                // Ktor engine for the coordination client on iOS.
-                implementation("io.ktor:ktor-client-darwin:3.3.3")
-            }
-        }
-
-        val iosX64Main by getting {
-            dependsOn(iosMain)
-        }
-
-        val iosArm64Main by getting {
-            dependsOn(iosMain)
-        }
-
-        val iosSimulatorArm64Main by getting {
-            dependsOn(iosMain)
-        }
-
-        // ============================================================
-        // macOS Platform
-        // ============================================================
-        val macosMain by creating {
-            dependsOn(commonMain)
-            dependencies {
-                // Ktor engine for the coordination client on macOS.
-                implementation("io.ktor:ktor-client-darwin:3.3.3")
-            }
-        }
-
-        val macosX64Main by getting {
-            dependsOn(macosMain)
-        }
-
-        val macosArm64Main by getting {
-            dependsOn(macosMain)
-        }
-
-        // ============================================================
-        // JavaScript Platform (Browser)
-        // ============================================================
-        val jsMain by getting {
-            dependencies {
-                implementation(compose.html.core)
-                // Freighter browser extension API for web wallet signing
-                implementation(npm("@stellar/freighter-api", "6.0.1"))
-
-                // Ktor engine for the coordination client on the web.
-                implementation("io.ktor:ktor-client-js:3.3.3")
             }
         }
     }

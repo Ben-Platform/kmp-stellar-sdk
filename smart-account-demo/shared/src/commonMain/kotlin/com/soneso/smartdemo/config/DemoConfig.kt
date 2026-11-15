@@ -22,15 +22,27 @@ object DemoConfig {
     /** WASM hash of the multisig smart account contract (OZ stellar-contracts v0.7.0).
      *  Passed to OZSmartAccountConfig.accountWasmHash for wallet deployment.
      *  This hash can change when the contract is upgraded or testnet is reset.
-     *  See docs/smart-accounts/README.md#testnet-contract-addresses for upload instructions. */
+     *  See docs/smart-accounts/README.md#testnet-contract-addresses for upload instructions.
+     *  Smart Account v0.7 hash: 86b49fe03f7df0ad1c2a28bd8361b923ab57096e09f397f92f0c00ae3bd06d28
+     *  */
+    /**
+     * Smart Account v0.8 hash: c514d35ea67eaea9bfc1fb3327854c0c06111bc1ddebd4fe217c504c1004b9e1
+     */
     const val ACCOUNT_WASM_HASH = "86b49fe03f7df0ad1c2a28bd8361b923ab57096e09f397f92f0c00ae3bd06d28"
 
     // -- Verifier Contracts --
-
+    /**
+     * v0.8-compat
+     * CC7EKIHQP3TN4CARQDND6CEOY2UXLWWC2X5GHTD5NLAT7BG5GPZIOM3F
+     */
     /** WebAuthn (secp256r1) signature verifier contract. Validates passkey signatures on-chain. */
     const val WEBAUTHN_VERIFIER_ADDRESS = "CB26VN37RCVNTHJZDEPK6IRO2MMTS3Z2IEO5JD5BINY2OOJ5KKJG7NKY"
 
     /** Ed25519 signature verifier contract. Validates Ed25519 signer signatures on-chain. */
+    /**
+     * v0.8-compat
+     * CAAVTMCBXEIBPR64EAASKFXERVPYFZA2JYP5A3BG6PESWEFUJX5IHKN4
+     */
     const val ED25519_VERIFIER_ADDRESS = "CAW2Z46INPO5VIJEILMYSSEOLBVJIIII5GOE3TN5EUURSRM2FJCF7AJ6"
 
     // -- Token Contracts --
@@ -82,7 +94,7 @@ object DemoConfig {
 
     /** Relying Party ID for passkey registration and authentication. Must match the domain
      *  configured in Digital Asset Links (Android) or apple-app-site-association (iOS/macOS). */
-    const val DEFAULT_RP_ID = "soneso.com"
+    const val DEFAULT_RP_ID = "auth-demo.myben.xyz"
 
     /** Display name shown to users during passkey registration prompts. */
     const val RP_NAME = "Smart Account Kit Demo"

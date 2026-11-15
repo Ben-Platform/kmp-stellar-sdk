@@ -4,9 +4,13 @@
 
     <!-- Digital Asset Links for passkey support -->
     <!-- Replace with your actual domain for production -->
-    <string name="asset_statements">
+    <string name="asset_statements" translatable="false">
         [{
-            \"include\": \"https://your-domain.example.com/.well-known/assetlinks.json\"
+            \"relation\": [\"delegate_permission/common.get_login_creds\"],
+            \"target\": {
+                \"namespace\": \"web\",
+                \"site\": \"https://auth-demo.myben.xyz\"
+            }
         }]
     </string>
 </resources>
